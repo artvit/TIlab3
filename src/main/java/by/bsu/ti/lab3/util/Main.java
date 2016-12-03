@@ -33,8 +33,7 @@ public class Main {
         System.out.println("K = " + K);
         double W = TunstallProcessor.countAvgSourceSymbolOnTargetSymbol(K, target);
         System.out.println("W = " + W);
-//        TODO
-        double lowerBoundW = TunstallProcessor.countAvgLowerBound();
+        double lowerBoundW = TunstallProcessor.countAvgLowerBound(source, target);
         System.out.println("W lower bound = " + lowerBoundW);
     }
 }

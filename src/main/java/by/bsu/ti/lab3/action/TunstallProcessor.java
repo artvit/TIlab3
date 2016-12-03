@@ -3,10 +3,7 @@ package by.bsu.ti.lab3.action;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class TunstallProcessor {
@@ -61,10 +58,12 @@ public final class TunstallProcessor {
         return target.getWordLength() / avgSourceLength;
     }
 
-//    TODO implement method
-    public static double countAvgLowerBound() {
+    public static double countAvgLowerBound(Source source, Target target) {
+        return countEntropy(source) / (Math.log(target.getAlphabetSize()) / Math.log(2));
+    }
 
-        return 0;
+    private static double countEntropy(Source source) {
+        return -Arrays.stream(source.getProbabilities()).map(x -> x * Math.log(x) / Math.log(2)).sum();
     }
 
     private static void addChildrenToQueue(TreeItem parent, Source source, PriorityQueue<TreeItem> queue) {
