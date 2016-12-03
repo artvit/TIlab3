@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
@@ -28,6 +29,43 @@ public final class TunstallProcessor {
                                  / (source.getSize() - 1));
     }
 
+    public static List<Pair<List<Integer>, List<Integer>>> matchTargetWords(List<List<Integer>> words, Target target) {
+        List<List<Integer>> targetWords = generateTargetWords(target);
+        List<Pair<List<Integer>, List<Integer>>> result = new ArrayList<>();
+        return matchWords(words, targetWords);
+    }
+
+    public static List<Pair<List<Integer>, List<Integer>>> matchWords(List<List<Integer>> words, List<List<Integer>> targetWords) {
+        List<Pair<List<Integer>, List<Integer>>> result = new ArrayList<>();
+        for (int i = 0; i < words.size(); i++) {
+            result.add(new MutablePair<>(words.get(i), targetWords.get(i)));
+        }
+        return result;
+    }
+
+    public static List<List<Integer>> generateTargetWords(Target target) {
+        List<List<Integer>> targetWords = new ArrayList<>();
+        for (int i = 0; i < (int) Math.pow(target.getAlphabetSize(), target.getWordLength()); i++) {
+            List<Integer> word = new ArrayList<>();
+            for (int j = 0; j < target.getWordLength(); j++) {
+                int t = (int) Math.pow(target.getAlphabetSize(), j);
+                word.add(i / t % target.getAlphabetSize());
+            }
+            Collections.reverse(word);
+            targetWords.add(word);
+        }
+        return targetWords;
+    }
+
+    public static double countAvgSourceSymbolOnTargetSymbol(double avgSourceLength, Target target) {
+        return target.getWordLength() / avgSourceLength;
+    }
+
+//    TODO implement method
+    public static double countAvgLowerBound() {
+
+        return 0;
+    }
 
     private static void addChildrenToQueue(TreeItem parent, Source source, PriorityQueue<TreeItem> queue) {
         for (int i = 0; i < source.getSize(); i++) {

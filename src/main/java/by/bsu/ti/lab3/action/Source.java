@@ -14,8 +14,6 @@ public class Source {
         this.probabilities = probabilities;
     }
 
-
-
     public int getSize() {
         return size;
     }
